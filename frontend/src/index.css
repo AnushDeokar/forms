@@ -1,0 +1,15 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.global_navbar{
+    font-family: 'Rubik Puddles', cursive;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .create_button{
+    background-color: white;
+    color: blueviolet;
+  }
