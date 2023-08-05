@@ -4,10 +4,12 @@ import {AiOutlineCloseCircle} from 'react-icons/ai';
 function QuestionCard() {
     const [questionType, setQuestionType] = useState('mcq');
     const [options, setOptions] = useState<string[]>([]);
-
-    const handleQuestionTypeChange = (event: ChangeEvent<HTMLInputElement>) => {
-      setQuestionType(event.target.value);
+ 
+    const handleQuestionChange = (event: ChangeEvent<HTMLSelectElement>) => {
+        setQuestionType(event.target.value);
     };
+
+
   
 
     const AddOption = ()=>{
@@ -34,62 +36,48 @@ function QuestionCard() {
         setOptions(temp);
     }
     const renderQuestion = () => {
-      if (questionType === 'mcq') {
         return (
-            <div>
-                <input className='question-input' value="1. Type your question here"/>
-                {
+                <>
+
+                {questionType === 'mcq'?
+                    <>
+                    {
                     options.map((option, ind)=>{
                         return <p className='ml-4 flex justify-between'><input value={option} onChange={(e)=>handleOptionChange(e, ind)}/><AiOutlineCloseCircle size={20} onClick={()=>handleOptionDelete(ind)}style={{"cursor":"pointer"}}/></p>
                     })
+                    }
+
+                    <div className='flex justify-around mt-10'>
+                        <button className='btn-2' onClick={AddOption}>Add Option</button>
+                        <button className='btn-2'>Delete Question</button>
+                    </div>
+                    </>
+                    :
+                    <>
+                        <input className='w-full outline-none mt-2 pl-4' placeholder='Your Answer' disabled={true}/>
+                        <div className='flex justify-center mt-10'>
+                            <button className='btn-2'>Delete Question</button>
+                        </div>
+                    </>
                 }
+                </>
+        )
 
-                <div className='flex justify-around mt-10'>
-                    <button className='btn-2' onClick={AddOption}>Add Option</button>
-                    <button className='btn-2'>Delete Question</button>
-                </div>
-
-            </div>
-        );
-      } else if (questionType === 'shortAnswer') {
-        return (
-            <div>
-                <input className='question-input' value="1. Type your question here"/>
-                <input className='w-full outline-none mt-2 pl-4' placeholder='Your Answer' disabled={true}/>
-                <div className='flex justify-center mt-10'>
-                    <button className='btn-2'>Delete Question</button>
-                </div>
-            </div>
-        );
-      }
     };
-  return (
-    <div className="questioncard">
-        <div className='hello pt-5 flex gap-5 mb-5'>
-            <label>
-                <input
-                type="radio"
-                value="mcq"
-                checked={questionType === 'mcq'}
-                onChange={handleQuestionTypeChange}
-                />
-                MCQ
-            </label>
-            <label>
-                <input
-                type="radio"
-                value="shortAnswer"
-                checked={questionType === 'shortAnswer'}
-                onChange={handleQuestionTypeChange}
-                />
-                Short Answer
-            </label>
+
+
+    return (
+        <div className="questioncard">
+            <div className='pt-5 flex gap-5 mb-5 justify-between'>
+                <input className='question-input' value="1. Type your question here"/>
+                <select id="dropdown" value={questionType} onChange={(e)=>handleQuestionChange(e)} style={{outline:"none"}}>
+                    <option value="mcq">MCQ</option>
+                    <option value="Short Answer">Short Answer</option>
+                </select>
+            </div>
+            {renderQuestion()}
         </div>
-      {renderQuestion()}
- 
-        <input className="w-full outline-none"/>
-    </div>
-  )
+    )
 }
 
 export default QuestionCard
