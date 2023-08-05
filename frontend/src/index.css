@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Caprasimo&family=Lato&family=Montserrat:wght@700&family=Roboto&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -8,8 +9,93 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-  }
-  .create_button{
+}
+.create_button{
     background-color: white;
     color: blueviolet;
-  }
+}
+
+.recent-head{
+    font-family: 'Montserrat', sans-serif;
+    margin: 25px;
+    margin-left: 80px;
+    font-size: 16px;
+    font-weight: 550;
+    color: #202124;
+}
+
+.card-top{
+    display: flex;
+    justify-content: center;
+    background-color: blueviolet;
+}
+
+.outer-head div{
+    background-color: transparent;
+}
+.popup{
+    transform: translate(-100px, -140px);
+    background-color: white;
+    padding-left: 10px;
+    border: 1px solid white ;
+    box-shadow: 2px 2px 5px grey;
+    padding: 20px;
+    width: 200px;
+    border-radius: 10px;
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-template-columns: 1fr;
+    row-gap: 5px;
+}
+.popup div{
+    cursor: pointer;
+}
+.card:hover{
+    border-color:blueviolet;
+}
+
+.form-box{
+    margin-top: 20px;
+    width: 600px;
+}
+.createform-head{
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px grey;
+    border: 8px solid;
+    border-color: blueviolet transparent transparent blue ;
+    padding: 20px;
+    background-color: white;
+}
+.questioncard{
+    margin-top: 20px;
+    border-radius: 5px;
+    width: 100%;
+    background-color: white;
+    padding: 0 10px;
+}
+.questioncard:div{
+    background-color: white;
+}
+.createform-head input{
+    outline: none;
+}
+.form-title{
+    font-size: 40px;
+}
+.question-input{
+    width: 100%;
+    outline: none;
+}
+
+.btn-2{
+    border-radius: 4px;
+    border: 1px solid #af7eeb;
+    color: white;
+    background-color: #af7eeb;
+    padding: 4px 6px;
+}
+@media screen and (max-width:600px) {
+    .form-box{
+        width: auto;
+    }
+}
