@@ -15,7 +15,7 @@ router.post('/register',async (req:Request, res: Response)=>{
             throw new Error("User Exists");
         }
         const hashedpassword : string= await bcrypt.hash(password, 10);
-        const newItem: User = { name, email, password: hashedpassword };
+        const newItem: User = { name: name, email: email, password: hashedpassword };
         const user = new userModel(newItem);
         await user.save();
     
