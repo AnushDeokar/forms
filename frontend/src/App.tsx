@@ -27,7 +27,7 @@ function App() {
         </Route>
         <Route element={<PrivateRoutes />}>
           <Route path='/' element={<Home />} />
-          <Route path='/create' element={<CreateForm />} />
+          <Route path='/createform' element={<CreateForm />} />
         </Route>
       </Routes>
     </BrowserRouter>

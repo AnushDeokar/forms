@@ -13,13 +13,13 @@ router.post('/register',async (req:Request, res: Response)=>{
         const isuser: User | null = await userModel.findOne({email: email});
         if (!isuser){         
             const hashedpassword : string= await bcrypt.hash(password, 10);
-            const newItem: User = { name: name, email: email, password: hashedpassword };
+            const newItem = { name: name, email: email, password: hashedpassword };
             const user = new userModel(newItem);
             await user.save();
         
-            res.status(201).json({ message: 'User inserted successfully', success: true, user });
+            res.status(201).json({ message: 'User inserted successfully', success: true });
         }else{
-            res.status(201).json({ message: 'Email Already Exists!', success: true });
+            res.status(201).json({ message: 'Email Already Exists!', success: false });
         }
       } catch (error) {
         console.error('Error inserting item:', error);
@@ -37,8 +37,9 @@ router.post('/login',async (req:Request, res: Response)=>{
         }else{
             const ispasswordmatch : boolean = await bcrypt.compare(password, isuser.password);
             if (ispasswordmatch){
-                const token_data :{email: string}= {
-                    email: isuser.email
+                const token_data :{email: string, user_id: string}= {
+                    email: isuser.email,
+                    user_id: isuser.id
                 }
                 const jwtSecret: Secret = process.env.JWT_SECRET as string;
                 const token: Secret = jwt.sign(token_data, jwtSecret);

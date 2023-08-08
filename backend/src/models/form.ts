@@ -1,18 +1,37 @@
-import mongoose from "mongoose";
+import mongoose, { Schema, Document } from "mongoose";
 
-interface question{
+interface Option {
+    number: number,
+    option: string
+}
+
+interface Question {
     question: string,
-    options: {number: Number, option: string}
+    options: Option[]
 }
 
-export interface Form {
-    questions: question[], 
+export interface Form extends Document {
+    title: string,
+    questions: Question[],
+    description: string,
+    createdAt: Date,
+    user_id : mongoose.Types.ObjectId
 }
 
-const formSchema = new mongoose.Schema<Form>({
-    questions: {required: true}
+const formSchema = new Schema<Form>({
+    questions: [{ 
+        question: String,
+        options: [{
+            number: Number,
+            option: String
+        }]
+    }],
+    title: { type: String, required: true },
+    user_id: {type: mongoose.Schema.Types.ObjectId},
+    description: { type: String },
+    createdAt: { type: Date, default: Date.now }
 });
-  
+
 const formModel = mongoose.model<Form>('Form', formSchema);
 
 export default formModel;
