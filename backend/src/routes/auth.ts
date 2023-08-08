@@ -11,15 +11,16 @@ router.post('/register',async (req:Request, res: Response)=>{
     try {
         const {name, email, password} : { name: string; email: string; password: string }  = req.body; 
         const isuser: User | null = await userModel.findOne({email: email});
-        if (isuser){
-            throw new Error("User Exists");
+        if (!isuser){         
+            const hashedpassword : string= await bcrypt.hash(password, 10);
+            const newItem: User = { name: name, email: email, password: hashedpassword };
+            const user = new userModel(newItem);
+            await user.save();
+        
+            res.status(201).json({ message: 'User inserted successfully', success: true, user });
+        }else{
+            res.status(201).json({ message: 'Email Already Exists!', success: true });
         }
-        const hashedpassword : string= await bcrypt.hash(password, 10);
-        const newItem: User = { name: name, email: email, password: hashedpassword };
-        const user = new userModel(newItem);
-        await user.save();
-    
-        res.status(201).json({ message: 'User inserted successfully', sucess: true, user });
       } catch (error) {
         console.error('Error inserting item:', error);
         res.status(500).json({ error: 'An error occurred while inserting the item' });

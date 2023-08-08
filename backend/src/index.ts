@@ -3,6 +3,7 @@ import authRouter from './routes/auth';
 import { connectToDatabase } from './db';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 
 const app:Application = express();
 const PORT = process.env.PORT || 8000;
@@ -10,6 +11,7 @@ const PORT = process.env.PORT || 8000;
 
 app.use(bodyParser.json({ limit: '50mb', type: 'application/json' }));
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+app.use(cors());
 dotenv.config();
 
 
