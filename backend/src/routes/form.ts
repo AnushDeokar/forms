@@ -12,8 +12,8 @@ const router = Router();
 router.post('/create', authverify, async (req: Request, res:Response)=>{
     console.log(req.body);
     try{
-        const email = (req as IGetUserAuthInfoRequest).user_email
-        const user: User | null = await userModel.findOne({email: email});
+        const userid = (req as IGetUserAuthInfoRequest).user_id
+        const user: User | null = await userModel.findOne({_id: userid});
         console.log(user?._id);
         const formData = {
             user_id: user?._id,

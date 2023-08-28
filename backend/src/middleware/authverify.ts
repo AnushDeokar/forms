@@ -7,10 +7,10 @@ export default function authverify(req: Request, res: Response, next: NextFuncti
     const token: string | string[] | undefined = req.headers['token'];
     const jwtSecret: Secret = process.env.JWT_SECRET as string;
     const decodedToken: any = jwt.verify(token as string, jwtSecret);
-    const useremail: string = decodedToken.email;
+    const userid: string = decodedToken.user_id;
 
     if (token) {
-      (req as IGetUserAuthInfoRequest).user_email = useremail; // Cast req to IGetUserAuthInfoRequest
+      (req as IGetUserAuthInfoRequest).user_id = userid; // Cast req to IGetUserAuthInfoRequest
       next();
     } else {
       res.status(401).json({

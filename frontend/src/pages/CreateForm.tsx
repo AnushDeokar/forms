@@ -5,7 +5,7 @@ import {useState, ChangeEvent} from 'react';
 import {BsLink} from 'react-icons/bs';
 import { GrAdd} from 'react-icons/gr';
 import backendUrl from '../backendUrl';
-
+import { useNavigate } from 'react-router-dom';
 interface formhead {
   title: string, 
   description: string
@@ -18,7 +18,7 @@ interface question{
 
 }
 function CreateForm() {
-
+  const navigate = useNavigate();
   const [questions, setQuestions] = useState<question[]>([]);
 
   const [formhead, setFormHead] = useState<formhead>({
@@ -61,7 +61,9 @@ function CreateForm() {
       }
       
       const res = await axios.post(`${backendUrl}/form/create`, formDetails, {headers: headers});
-      console.log(res);
+      if (res.data.success){
+        navigate("/");
+      }
       
   }
 

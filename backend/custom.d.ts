@@ -1,4 +1,4 @@
 import { Request } from "express"
 export interface IGetUserAuthInfoRequest extends Request {
-  user_email: string // or any other type
+  user_id: string // or any other type
 }
