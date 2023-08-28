@@ -55,8 +55,13 @@ function CreateForm() {
         description: formhead.description,
         questions: questions
       }
-
-      const res = await axios.post(`${backendUrl}/form/create`, formDetails);
+      const headers = {
+        'Content-Type': 'application/json',
+        'token': localStorage.getItem("auth_token")
+      }
+      
+      const res = await axios.post(`${backendUrl}/form/create`, formDetails, {headers: headers});
+      console.log(res);
       
   }
 
