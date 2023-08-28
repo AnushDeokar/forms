@@ -84,7 +84,7 @@ function QuestionCard({handleChange, question, handleDelete}: QuestionCardProps)
             <div className='pt-5 flex gap-5 mb-5 justify-between'>
                 <input className='question-input' value={question.text} onChange={(e)=>handleChange("text", e.target.value)}/>
                 <select id="dropdown" value={question.type} onChange={(e)=>handleQuestionChange(e)} style={{outline:"none"}}>
-                    <option value="mcq">MCQ</option>
+                    <option value="SA">MCQ</option>
                     <option value="Short Answer">Short Answer</option>
                 </select>
             </div>

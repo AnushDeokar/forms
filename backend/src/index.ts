@@ -1,9 +1,11 @@
 import express, {Request,Response,Application} from 'express';
 import authRouter from './routes/auth';
+import formRouter from './routes/form';
 import { connectToDatabase } from './db';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import authverify from './middleware/authverify';
 
 const app:Application = express();
 const PORT = process.env.PORT || 8000;
@@ -17,7 +19,9 @@ dotenv.config();
 
 
 app.use('/auth', authRouter);
+app.use('/form', formRouter);
 app.use(express.json());
+app.use(authverify);
 
 
 

@@ -19,18 +19,19 @@ export interface Form extends Document {
 }
 
 const formSchema = new Schema<Form>({
-    questions: [{ 
-        question: String,
-        options: [{
-            number: Number,
-            option: String
-        }]
-    }],
+    questions: [
+        {
+            type: { type: String, enum: ['MCQ', 'SA', 'Dropdown'], required: true },
+            text: { type: String, required: true },
+            options: { type: [String] }
+        }
+    ],
     title: { type: String, required: true },
-    user_id: {type: mongoose.Schema.Types.ObjectId},
+    user_id: { type: mongoose.Schema.Types.ObjectId },
     description: { type: String },
     createdAt: { type: Date, default: Date.now }
 });
+
 
 const formModel = mongoose.model<Form>('Form', formSchema);
 

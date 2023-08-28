@@ -5,10 +5,29 @@ import bcrypt from 'bcryptjs';
 import userModel, {User} from '../models/user';
 import authverify from '../middleware/authverify';
 import formModel from '../models/form';
+import { IGetUserAuthInfoRequest } from '../../custom';
 
 const router = Router();
 
-router.post('/create', authverify, async(req: Request, res:Response)=>{
-    //TODO::
+router.post('/create', authverify, async (req: Request, res:Response)=>{
+    console.log(req.body);
+    try{
+        const email = (req as IGetUserAuthInfoRequest).user_email
+        const user: User | null = await userModel.findOne({email: email});
+        console.log(user?._id);
+        const formData = {
+            user_id: user?._id,
+            title: req.body.title,
+            description: req.body.description,
+            questions: req.body.questions
+        }
+        const form  = new formModel(formData);
+        form.save();
+        res.status(201).json({message:"Form successfully created", success: true});
+    }catch (err){
+        res.status(201).json({message:err, success: false});
+    }
 
 })
+
+export default router;
