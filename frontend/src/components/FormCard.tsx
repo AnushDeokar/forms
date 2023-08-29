@@ -3,20 +3,18 @@ import {BsThreeDotsVertical} from 'react-icons/bs'
 import {AiOutlineEdit, AiOutlineDelete} from 'react-icons/ai'
 import {BiAnalyse} from "react-icons/bi";
 import { myform } from '../interfaces/myform';
-
+import { useNavigate } from 'react-router-dom';
 function FormCard({data}:{data:myform}) {
-
+    const navigate = useNavigate();
     const formattedDate = (inputDate: string)=>{
         const [year, month, day] = inputDate.substring(0, 10).split('-');
-
-        // Format the date
         const fd = `${day}-${month}-${year.slice(-2)}`;
         
         return fd
     }
     const [toggle, setToggle] = useState<boolean>(false);
     return (
-        <div className='card grid border-slate-300 border w-60'>
+        <div className='card grid border-slate-300 border w-60' onClick={()=>navigate(`/edit/${data._id}`)}>
             <div className='card-top w-full'>
                 <img src='formcard.png' className='h-40'/>
             </div>

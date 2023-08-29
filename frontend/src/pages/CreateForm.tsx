@@ -6,6 +6,7 @@ import {BsLink} from 'react-icons/bs';
 import { GrAdd} from 'react-icons/gr';
 import backendUrl from '../backendUrl';
 import { useNavigate } from 'react-router-dom';
+import { toast, Toaster } from 'react-hot-toast';
 interface formhead {
   title: string, 
   description: string
@@ -62,6 +63,7 @@ function CreateForm() {
       
       const res = await axios.post(`${backendUrl}/form/create`, formDetails, {headers: headers});
       if (res.data.success){
+        toast.success('Form created successfully!', {duration: 3000});
         navigate("/");
       }
       
@@ -73,6 +75,7 @@ function CreateForm() {
 
   return (
     <Layout backgroundColor="#f0ebf8">
+      <Toaster/>
         <div className='w-full' >
             <div className='form-box m-auto'>
                 <div className='createform-head overflow-hidden'>

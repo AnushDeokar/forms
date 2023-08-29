@@ -55,8 +55,8 @@ function QuestionCard({handleChange, question, handleDelete}: QuestionCardProps)
                 {question.type === 'MCQ'?
                     <>
                     {
-                    question?.options?.map((option: string, ind: Number)=>{
-                        return <p className='ml-4 flex justify-between'><input value={option} onChange={(e)=>handleOptionChange(e, ind)}/><AiOutlineCloseCircle size={20} onClick={()=>handleOptionDelete(ind)}style={{"cursor":"pointer"}}/></p>
+                    question?.options?.map((option: string, ind)=>{
+                        return <p className='ml-4 flex justify-between' key={ind}><input value={option} onChange={(e)=>handleOptionChange(e, ind)}/><AiOutlineCloseCircle size={20} onClick={()=>handleOptionDelete(ind)}style={{"cursor":"pointer"}}/></p>
                     })
                     }
 

@@ -1,6 +1,7 @@
 import './App.css'
 import Auth from './pages/Auth'
 import CreateForm from './pages/CreateForm';
+import EditForm from './pages/EditFom';
 import Home from './pages/Home';
 import { BrowserRouter, Route, Routes, Outlet, Navigate } from 'react-router-dom';
 
@@ -16,10 +17,6 @@ function App() {
   }
   
   return (
-    <div>
-      {/* <Auth/> */}
-      {/* <Home/> */}
-      {/* <CreateForm/> */}
       <BrowserRouter>
       <Routes>
         <Route element={<RestrictedRoutes />}>
@@ -28,10 +25,10 @@ function App() {
         <Route element={<PrivateRoutes />}>
           <Route path='/' element={<Home />} />
           <Route path='/createform' element={<CreateForm />} />
+          <Route path='/edit/:id' element={<EditForm />} />
         </Route>
       </Routes>
     </BrowserRouter>
-    </div>
   )
 }
 

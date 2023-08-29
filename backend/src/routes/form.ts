@@ -41,4 +41,36 @@ router.get('/all', authverify,async (req: Request, res:Response)=>{
         res.status(201).json({message:err, success: false});
     }
 })
+
+router.get('/edit/:id', authverify,async (req: Request, res:Response)=>{
+    try{
+        const id = req.params.id;
+        const form = await formModel.findById(id);
+        res.status(201).json({
+            message: "Successfully fetched!",
+            form: form,
+            success: true
+        })
+    }catch (err){
+        res.status(201).json({message:err, success: false});
+    }
+})
+
+router.put('/edit/:id', authverify, async (req, res) => {
+    try {
+        const id = req.params.id;
+        const newForm = req.body;
+        const updatedForm = await formModel.findByIdAndUpdate(id, newForm, { new: true });
+
+        if (!updatedForm) {
+            return res.status(404).json({ message: 'Form not found' });
+        }
+        res.status(201).json({message:"Form Edited created", success: true});
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal Server Error' });
+    }
+});
+
+
 export default router;

@@ -6,11 +6,10 @@ import axios from 'axios';
 import backendUrl from '../backendUrl';
 
 function Home() {
-
   const [myforms, setMyForms] = useState<myform[]>([]);
   useEffect(()=>{
       const setformdata = async ()=>{
-        
+      
         const headers = {
           'Content-Type': 'application/json',
           'token': localStorage.getItem("auth_token")
@@ -33,7 +32,7 @@ function Home() {
         <div className='px-20'>
         <div className='mx-auto grid lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-1'>
             {myforms.map((data, ind)=>{
-              return <FormCard data={data} key={ind}/>
+              return <FormCard data={data} key={ind} />
             })}
         </div>
         </div>

@@ -4,7 +4,7 @@ interface question{
     options: string[],
 }
 export interface myform{
-    id: string,
+    _id: string,
     title: string,
     description: string,
     questions: question[],
