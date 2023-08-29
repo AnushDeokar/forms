@@ -21,7 +21,7 @@ export interface Form extends Document {
 const formSchema = new Schema<Form>({
     questions: [
         {
-            type: { type: String, enum: ['MCQ', 'SA', 'Dropdown'], required: true },
+            type: { type: String, enum: ['MCQ', 'SA'], required: true },
             text: { type: String, required: true },
             options: { type: [String] }
         }

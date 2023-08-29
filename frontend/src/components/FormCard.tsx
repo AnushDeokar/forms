@@ -2,9 +2,18 @@ import { useState } from 'react'
 import {BsThreeDotsVertical} from 'react-icons/bs'
 import {AiOutlineEdit, AiOutlineDelete} from 'react-icons/ai'
 import {BiAnalyse} from "react-icons/bi";
+import { myform } from '../interfaces/myform';
 
-function FormCard() {
+function FormCard({data}:{data:myform}) {
 
+    const formattedDate = (inputDate: string)=>{
+        const [year, month, day] = inputDate.substring(0, 10).split('-');
+
+        // Format the date
+        const fd = `${day}-${month}-${year.slice(-2)}`;
+        
+        return fd
+    }
     const [toggle, setToggle] = useState<boolean>(false);
     return (
         <div className='card grid border-slate-300 border w-60'>
@@ -13,8 +22,8 @@ function FormCard() {
             </div>
             <div className='flex justify-between items-center'>
                 <div className='w-full p-5'>
-                    <p className='font-bold'>Hello World</p>
-                    <p>Created at</p>
+                    <p className='font-bold'>{data.title}</p>
+                    <p>{formattedDate(data.createdAt)}</p>
                 </div>
                 <div className='pr-4'>
                     {toggle &&

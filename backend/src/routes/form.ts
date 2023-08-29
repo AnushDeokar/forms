@@ -10,11 +10,9 @@ import { IGetUserAuthInfoRequest } from '../../custom';
 const router = Router();
 
 router.post('/create', authverify, async (req: Request, res:Response)=>{
-    console.log(req.body);
     try{
         const userid = (req as IGetUserAuthInfoRequest).user_id
         const user: User | null = await userModel.findOne({_id: userid});
-        console.log(user?._id);
         const formData = {
             user_id: user?._id,
             title: req.body.title,
@@ -30,4 +28,17 @@ router.post('/create', authverify, async (req: Request, res:Response)=>{
 
 })
 
+router.get('/all', authverify,async (req: Request, res:Response)=>{
+    try{
+        const userid = (req as IGetUserAuthInfoRequest).user_id
+        const forms = await formModel.find({ user_id: userid }).sort({ created_at: 1 });
+        res.status(201).json({
+            message: "Successfully fetched!",
+            forms: forms,
+            success: true
+        })
+    }catch (err){
+        res.status(201).json({message:err, success: false});
+    }
+})
 export default router;

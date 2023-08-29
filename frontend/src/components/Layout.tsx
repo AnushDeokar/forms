@@ -10,9 +10,9 @@ const Layout = ({ children, backgroundColor }: LayoutProps) => {
     <div style={{backgroundColor:backgroundColor}} className='outer-div min-h-screen'>
       <Navbar />
       {children}
-      <div className='h-10 w-full text-center absolute bottom-0' style={{backgroundColor:backgroundColor}}>
+      {/* <div className='h-10 w-full text-center absolute bottom-0' style={{backgroundColor:backgroundColor}}>
           Made with 💙 by Anush | Copyright 2023
-      </div>
+      </div> */}
     </div>
   )
 }
