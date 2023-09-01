@@ -14,8 +14,8 @@ function FormCard({data}:{data:myform}) {
     }
     const [toggle, setToggle] = useState<boolean>(false);
     return (
-        <div className='card grid border-slate-300 border w-60' onClick={()=>navigate(`/edit/${data._id}`)}>
-            <div className='card-top w-full'>
+        <div className='card grid border-slate-300 border w-60'>
+            <div className='card-top w-full' onClick={()=>navigate(`/edit/${data._id}`)}>
                 <img src='formcard.png' className='h-40'/>
             </div>
             <div className='flex justify-between items-center'>
