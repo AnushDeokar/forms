@@ -1,11 +1,11 @@
 import axios from 'axios';
 import Layout from '../components/Layout'
 import QuestionCard from '../components/QuestionCard'
-import {useState, ChangeEvent} from 'react';
+import {useState, ChangeEvent, useEffect} from 'react';
 import {BsLink} from 'react-icons/bs';
 import { GrAdd} from 'react-icons/gr';
 import backendUrl from '../backendUrl';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { toast, Toaster } from 'react-hot-toast';
 interface formhead {
   title: string, 
@@ -18,9 +18,12 @@ interface question{
   options? : string[]
 
 }
-function CreateForm() {
+function Form() {
+  const {id} = useParams();
   const navigate = useNavigate();
   const [questions, setQuestions] = useState<question[]>([]);
+  const [isloading, setIsLoading] = useState<boolean>(true);
+  
 
   const [formhead, setFormHead] = useState<formhead>({
     title:'Untitled Form',
@@ -50,6 +53,31 @@ function CreateForm() {
     })
     setQuestions(temp_questions);
   }
+
+  useEffect(()=>{
+    const setformdata = async ()=>{
+      
+        const headers = {
+          'Content-Type': 'application/json',
+          'token': localStorage.getItem("auth_token")
+        }
+        axios.get(`${backendUrl}/form/edit/${id}`, {headers: headers})
+        .then((res)=>{
+            const form = res.data.form;
+            const presentformhead = {
+                title: form.title,
+                description: form.description
+            }
+            setFormHead(presentformhead);
+            setQuestions(form.questions);
+            setIsLoading(false);
+        })
+        .catch((err)=>{
+          console.log(err);
+        })
+      }
+      setformdata();
+  }, [])
   const handleSubmit = async ()=>{
       const formDetails = {
         title: formhead.title,
@@ -61,40 +89,37 @@ function CreateForm() {
         'token': localStorage.getItem("auth_token")
       }
       
-      const res = await axios.post(`${backendUrl}/form/create`, formDetails, {headers: headers});
+      const res = await axios.put(`${backendUrl}/form/edit/${id}`, formDetails, {headers: headers});
       if (res.data.success){
-        toast.success('Form created successfully!', {duration: 3000});
+        toast.success('Form successfully Edited!', {duration: 3000})
         navigate("/");
       }
       
   }
 
-  const addQuestion = ()=>{
-    setQuestions([...questions, {type:"MCQ", text:"Type your question here", options:[]}]);
-  }
-
   return (
     <Layout backgroundColor="#f0ebf8">
-      <Toaster/>
+        {!isloading&&<>
+        <Toaster/>
         <div className='w-full' >
             <div className='form-box m-auto'>
                 <div className='createform-head overflow-hidden'>
-                    <input className='form-title' name="title" value={formhead.title} onChange={handleChange} />
-                    <textarea className='w-full outline-none' name="description" value={formhead.description} onChange={handleChange}/>
+                    <input className='form-title' name="title" value={formhead.title} disabled={true} onChange={handleChange} />
+                    <textarea disabled={true} className='w-full outline-none' name="description" value={formhead.description} onChange={handleChange}/>
                 </div>
                 {questions.map((question, ind)=>{
-                    return (<QuestionCard  key={ind} question={question} handleChange={(type: string, value: string | string[])=>handleQuestionChange(ind, type, value)} handleDelete={()=>handleQuestionDelete(ind)}/>)
+                    return (<QuestionCard key={ind} question={question}  handleChange={(type: string, value: string | string[])=>handleQuestionChange(ind, type, value)} handleDelete={()=>handleQuestionDelete(ind)}/>)
                 })}
                 
                 <div className='flex justify-between mt-10 w-full overflow-hidden'>
-                      <button className='flex items-center gap-2 ml-10 create_button px-3' ><BsLink/> <span>Copy Link</span></button>
-                      <button className='flex items-center gap-2 ml-10 create_button px-3' onClick={addQuestion}><GrAdd style={{color:"white"}}/> <span>Add Question</span></button>
                       <button className='btn-2 mr-10 w-20' onClick={handleSubmit}>Save</button>
                 </div>
             </div>
         </div>
+        </>
+        }
     </Layout>
   )
 }
 
-export default CreateForm
+export default Form
