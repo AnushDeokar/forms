@@ -2,8 +2,6 @@ import axios from 'axios';
 import Layout from '../components/Layout'
 import QuestionCard from '../components/QuestionCard'
 import {useState, ChangeEvent, useEffect} from 'react';
-import {BsLink} from 'react-icons/bs';
-import { GrAdd} from 'react-icons/gr';
 import backendUrl from '../backendUrl';
 import { useNavigate, useParams } from 'react-router-dom';
 import { toast, Toaster } from 'react-hot-toast';
